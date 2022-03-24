@@ -1,5 +1,6 @@
 #include <iostream> // standard input/output stream objects
 #include <stdlib.h> // srand, rand
+#include <time.h> // time
 using namespace std;
 
 // 1 = "rock"
@@ -12,9 +13,10 @@ void finalAnswer(int, int);
 
 int main()
 {
-  int compChoice, userInput;
+  int compChoice, userInput = 0;
+  bool bFail;
   
-  while(true) {
+  // while(true) {
   // Create computer's random number from 1-3
   srand (time(NULL)); // initialize random seed
   compChoice = {
@@ -25,28 +27,30 @@ int main()
   cout << "Welcome to a game of Rock, Paper, Scissors." << endl;
 
   // User must enter their chioce of "rock", "paper", or scissors"
+  do {
   userMenu();
   cin >> userInput;
+   
+  bFail = cin.fail();
+  		cin.clear();
+			cin.ignore();
+  }
+  while (bFail == true || userInput < 1 || userInput > 3);
   cout << "----------------------------------------" << endl;
   cout << "----------------------------------------" << endl;
-  // validate input
-  while (userInput < 1 || userInput > 3) {
-    cout << "\nThe number you selected doesn't exist. Try again." << endl;
-    cout << "Enter a number between 1-3: ";
-      cin >> userInput;
-    }; // end of while loop
+
 
   // Computer's choice is displayed
   computersChoice(compChoice);
   finalAnswer(compChoice, userInput);  
-  }  
+  // }  
   return 0;
 } // end of main
 
 
 /* Function Definitions */
 void userMenu(){
-  cout << "Choose your weapon and enter the number: " << endl;
+  cout << "Choose your weapon and enter it's number, 1, 2, or 3: " << endl;
   // rock
   cout << "1: Rock" << endl;
   cout << "********************" << endl;
@@ -116,7 +120,7 @@ void computersChoice(int compChoice)
       break;
     }
     cout << "\n\n\n";
-  return compChoice;
+  // return compChoice;
 };
 
 void finalAnswer(int cC, int uI){
